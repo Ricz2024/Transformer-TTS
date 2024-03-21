@@ -27,7 +27,7 @@ epochs = 10000
 lr = 0.001
 save_step = 2000
 image_step = 500
-batch_size = 32
+batch_size = 8
 
 cleaners='english_cleaners'
 

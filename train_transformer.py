@@ -68,9 +68,9 @@ def main():
                 for i, prob in enumerate(attn_probs):
                     
                     num_h = prob.size(0)
-                    for j in range(4):
+                    for j in range(min(4, num_h // 8)):
                 
-                        x = vutils.make_grid(prob[j*16] * 255)
+                        x = vutils.make_grid(prob[j*8] * 255)
                         writer.add_image('Attention_%d_0'%global_step, x, i*4+j)
                 
                 for i, prob in enumerate(attns_enc):
@@ -78,7 +78,7 @@ def main():
                     
                     for j in range(4):
                 
-                        x = vutils.make_grid(prob[j*16] * 255)
+                        x = vutils.make_grid(prob[j*8] * 255)
                         writer.add_image('Attention_enc_%d_0'%global_step, x, i*4+j)
             
                 for i, prob in enumerate(attns_dec):
@@ -86,7 +86,7 @@ def main():
                     num_h = prob.size(0)
                     for j in range(4):
                 
-                        x = vutils.make_grid(prob[j*16] * 255)
+                        x = vutils.make_grid(prob[j*8] * 255)
                         writer.add_image('Attention_dec_%d_0'%global_step, x, i*4+j)
                 
             optimizer.zero_grad()

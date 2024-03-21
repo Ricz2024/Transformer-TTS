@@ -33,7 +33,7 @@ def get_spectrograms(fpath):
     mag = np.abs(linear)  # (1+n_fft//2, T)
 
     # mel spectrogram
-    mel_basis = librosa.filters.mel(hp.sr, hp.n_fft, hp.n_mels)  # (n_mels, 1+n_fft//2)
+    mel_basis = librosa.filters.mel(sr=hp.sr, n_fft=hp.n_fft, n_mels=hp.n_mels)
     mel = np.dot(mel_basis, mag)  # (n_mels, t)
 
     # to decibel
@@ -49,6 +49,7 @@ def get_spectrograms(fpath):
     mag = mag.T.astype(np.float32)  # (T, 1+n_fft//2)
 
     return mel, mag
+
 
 def spectrogram2wav(mag):
     '''# Generate wave file from linear magnitude spectrogram

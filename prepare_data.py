@@ -26,18 +26,18 @@ class PrepareDataset(Dataset):
         return len(self.landmarks_frame)
 
     def __getitem__(self, idx):
-        wav_name = os.path.join(self.root_dir, self.landmarks_frame.ix[idx, 0]) + '.wav'
+        wav_name = os.path.join(self.root_dir, self.landmarks_frame.iloc[idx, 0] + '.wav')  # Corrected indexing method to use 'iloc'
         mel, mag = get_spectrograms(wav_name)
         
         np.save(wav_name[:-4] + '.pt', mel)
         np.save(wav_name[:-4] + '.mag', mag)
 
-        sample = {'mel':mel, 'mag': mag}
+        sample = {'mel': mel, 'mag': mag}
 
         return sample
     
 if __name__ == '__main__':
-    dataset = PrepareDataset(os.path.join(hp.data_path,'metadata.csv'), os.path.join(hp.data_path,'wavs'))
+    dataset = PrepareDataset("D:\\TTS\\1st\\Transformer-TTS\\data\\LJSpeech-1.1\\metadata.csv", "D:\\TTS\\1st\\Transformer-TTS\\data\\LJSpeech-1.1\\wavs")
     dataloader = DataLoader(dataset, batch_size=1, drop_last=False, num_workers=8)
     from tqdm import tqdm
     pbar = tqdm(dataloader)
